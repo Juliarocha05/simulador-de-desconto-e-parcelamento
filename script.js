@@ -47,9 +47,27 @@ toNumber(document.getElementById('desconto'). value);
      if (isNaN(desconto) || desconto < 0) throw new Error('Desconto deve ser ≥ 0.'); 
      if (isNaN(taxa) || taxa < 0) throw new Error('Taxa deve ser ≥ 0.');
      if (isNaN(parcelas) || parcelas < 1) throw new Error('Número de parcelas deve ser ≥ 1.');
+ 
+     // Cálculos 
+     const precoComDesconto = preco * (1 - desconto / 100);
+     const i = taxa / 100; // taxa decimal ao mês
+     const J_total = precoComDesconto * i * parcelas; // juros simples
+total 
+     const totalPagar = precoComDesconto + J_total;
+     const valorParcela = totalPagar / parcelas;
+     const economia = preco - preco
+
+     // Exibir resultados principais 
+     outPrecoComDesconto.textContent = moedaBR(precoComDesconto);
+     outValorParcela.textContent = moedaBR(valorParcela);
+     outTotalPagar.textContent = moedaBR(totalPagar);
+     outEconomia.textContent = moedaBR(economia);
+     resultados.hidden = false;
+
+     // Montar/garantir tbody 
 
 
 
 
 
-    }
+    

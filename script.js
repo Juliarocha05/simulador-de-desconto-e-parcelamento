@@ -58,6 +58,7 @@ total
      const economia = preco - preco
 
      // Exibir resultados principais 
+
      outPrecoComDesconto.textContent = moedaBR(precoComDesconto);
      outValorParcela.textContent = moedaBR(valorParcela);
      outTotalPagar.textContent = moedaBR(totalPagar);
@@ -65,8 +66,58 @@ total
      resultados.hidden = false;
 
      // Montar/garantir tbody 
+     let corpoTabela = document.querySelector('#tabela tbody');
+     if (!corpoTabela)  {
+        const tabela = document.getElementById('tabela');
+        corpoTabela = document.createElement('tbody');
+        tabela.appendChild(corpoTabela);
+     }
 
+corpoTabela.innerHTML = '';
 
+const jurosMesConstante = precoComDesconto * i;  // juros do mês constante 
+const amortizacaoConstante = precoComDesconto / parcelas; // amortização constante 
+
+for (let mes = 1; mes<= parcelas; mes++) {
+  //evitar pequenas diferenças de arredandamento no último mês 
+  const principalRestante = Math.max(0, precoComDesconto - amortizaçaoConstante * mes);
+
+  const tr = document.createElement('tr');
+
+  const tdMes = document.createElement('td');
+  tdMes.textContent = mes;
+
+  const tdParcela = document.createElement('td');
+  tdParcela.textContent = moedaBR(valorParcela);
+
+  const tdJurosMes = document.createElement('td');
+  tdJurosMes.textContent = moedaBR(jurosMesConstante);
+
+  const tdAmortizacao = document.createElement('td');
+  tdAmortizacao.textContent = moedaBR(amortizacaoConstante);
+
+  const tdRestante = document.createElement('td');
+  tdRestante.textContent = moedaBR(principalRestante);
+
+  // Usa appenChild (mais compatível que append com múltiplos args)
+  tr.appendChild(tdMes);
+  tr.appendChild(tdParcela);
+  tr.appendChild(tdJurosMes);
+  tr.appendChild(tdAmortizacao);
+  tr.appendChild(tdRestante);
+
+  corpoTabela.appendChild(tr);
+}
+ 
+  tabelaSecao.hidden = false;
+} catch (err) {
+  console.error(err);
+  erro.textContent = err.message || 'Ocorreu um erro - abra o Console (F12) para ver detalhes. ';
+  resultados.hidden = true;
+  tabelaSecao.hidden = true;
+  }
+ });
+});s
 
 
 
